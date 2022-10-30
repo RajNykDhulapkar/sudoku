@@ -1,0 +1,146 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+}
+.logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+    filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+    }
+}
+
+.card {
+    padding: 2em;
+}
+
+.read-the-docs {
+    color: #888;
+}
+
+.mainApp {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.header {
+    width: min(500px, calc(100% - 1rem));
+    text-align: center;
+    width: 80%;
+    padding: 0;
+    margin: 1rem 0 0.6rem 0;
+    // outline: 1px solid red;
+
+    h1 {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.boardContainer {
+    width: min(500px, calc(100% - 1rem));
+    display: flex;
+    margin: 0 2rem;
+    align-items: center;
+    justify-content: center;
+    // outline: 1px solid blue;
+}
+.board {
+    display: grid;
+    font-size: 1.8rem;
+    width: 500px;
+    height: 500px;
+    grid-template-columns: auto auto auto;
+    gap: 2px;
+    row-gap: 2px;
+}
+
+.boardGroup {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
+    gap: 1px;
+    row-gap: 1px;
+
+    border-color: rgb(14, 212, 8);
+    border-style: solid;
+}
+
+.boardCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
+
+    border-color: grey;
+    border-style: solid;
+}
+
+.boardGroup:nth-child(1),
+.boardCell:nth-child(1) {
+    border-width: 0px 1px 1px 0px;
+}
+.boardGroup:nth-child(2),
+.boardCell:nth-child(2) {
+    border-width: 0px 1px 1px 1px;
+}
+.boardGroup:nth-child(3),
+.boardCell:nth-child(3) {
+    border-width: 0px 0px 1px 1px;
+}
+
+.boardGroup:nth-child(4),
+.boardCell:nth-child(4) {
+    border-width: 1px 1px 1px 0px;
+}
+.boardGroup:nth-child(5),
+.boardCell:nth-child(5) {
+    border-width: 1px 1px 1px 1px;
+}
+.boardGroup:nth-child(6),
+.boardCell:nth-child(6) {
+    border-width: 1px 0px 1px 1px;
+}
+
+.boardGroup:nth-child(7),
+.boardCell:nth-child(7) {
+    border-width: 1px 1px 0px 0px;
+}
+.boardGroup:nth-child(8),
+.boardCell:nth-child(8) {
+    border-width: 1px 1px 0px 1px;
+}
+.boardGroup:nth-child(9),
+.boardCell:nth-child(9) {
+    border-width: 1px 0px 0px 1px;
+}
