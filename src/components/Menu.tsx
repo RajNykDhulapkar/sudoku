@@ -82,7 +82,7 @@ const Menu = ({
                 <button
                     style={{
                         visibility:
-                            mode === Number(localStorage.getItem("active_mode"))
+                            mode === Number(localStorage.getItem("active_mode") || "0")
                                 ? "visible"
                                 : "hidden",
                     }}
