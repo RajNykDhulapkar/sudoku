@@ -1,5 +1,10 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import cogIcon from "./assets/cog.svg";
+import backArrowIcon from "./assets/back-arrow.svg";
+import refreshIcon from "./assets/refresh.svg";
+import checkIcon from "./assets/check.svg";
+import pencilIcon from "./assets/pencil.svg";
+import undoIcon from "./assets/undo.svg";
 import classes from "./App.module.scss";
 
 function App() {
@@ -23,7 +28,13 @@ function App() {
     return (
         <div className={classes.mainApp}>
             <div className={classes.header}>
+                <button className={`${classes.button}`}>
+                    <img src={backArrowIcon} alt='React Logo' />
+                </button>
                 <h1>Sudoku</h1>
+                <button className={`${classes.button}`}>
+                    <img src={cogIcon} alt='React Logo' />
+                </button>
             </div>
 
             <div className={classes.boardContainer}>
@@ -47,21 +58,50 @@ function App() {
                 </div>
             </div>
             <div className={classes.numbersContainer}>
-                <span className={classes.numbers}>1</span>
-                <span className={classes.numbers}>2</span>
-                <span className={classes.numbers}>3</span>
-                <span className={classes.numbers}>4</span>
-                <span className={classes.numbers}>5</span>
-                <span className={classes.numbers}>6</span>
-                <span className={classes.numbers}>7</span>
-                <span className={classes.numbers}>8</span>
-                <span className={classes.numbers}>9</span>
+                <button data-count='0' className={classes.numbers}>
+                    1
+                </button>
+                <button data-count='0' className={classes.numbers}>
+                    2
+                </button>
+                <button data-count='0' className={classes.numbers}>
+                    3
+                </button>
+                <button data-count='0' className={classes.numbers}>
+                    4
+                </button>
+                <button data-count='0' className={classes.numbers}>
+                    5
+                </button>
+                <button data-count='0' className={classes.numbers}>
+                    6
+                </button>
+                <button data-count='0' className={classes.numbers}>
+                    7
+                </button>
+                <button data-count='0' className={classes.numbers}>
+                    8
+                </button>
+                <button data-count='0' className={classes.numbers}>
+                    9
+                </button>
+                <button data-count='' className={classes.numbers}>
+                    X
+                </button>
             </div>
-            <div>
-                <button>r</button>
-                <button>r</button>
-                <button>r</button>
-                <button>r</button>
+            <div className={classes.bottomControl}>
+                <button className={`${classes.bottomButton} ${classes.refresh}`}>
+                    <img src={refreshIcon} alt='React Logo' />
+                </button>
+                <button className={classes.bottomButton}>
+                    <img src={checkIcon} alt='React Logo' />
+                </button>
+                <button className={`${classes.bottomButton} ${classes.pencil}`}>
+                    <img src={pencilIcon} alt='React Logo' />
+                </button>
+                <button className={classes.bottomButton}>
+                    <img src={undoIcon} alt='React Logo' />
+                </button>
             </div>
         </div>
     );
