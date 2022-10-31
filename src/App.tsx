@@ -6,9 +6,12 @@ import checkIcon from "./assets/check.svg";
 import pencilIcon from "./assets/pencil.svg";
 import undoIcon from "./assets/undo.svg";
 import classes from "./App.module.scss";
+import Menu from "./components/Menu";
 
 function App() {
-    const [count, setCount] = useState(0);
+    const gameModes = ["Beginner", "Easy", "Medium", "Hard", "Extreme"];
+    const [mode, setMode] = useState<number>(0);
+    const [showMenu, setShowMenu] = useState<boolean>(true);
 
     const board = [
         [5, 3, 1, 6, 2, 8, 4, 7, 9],
@@ -25,7 +28,15 @@ function App() {
         return Array.apply(0, Array(end - start)).map((element, index) => index + start);
     };
 
-    return (
+    return showMenu ? (
+        <Menu
+            gameModes={gameModes}
+            mode={mode}
+            setMode={setMode}
+            showMenu={showMenu}
+            setShowMenu={setShowMenu}
+        />
+    ) : (
         <div className={classes.mainApp}>
             <div className={classes.header}>
                 <button className={`${classes.button}`}>

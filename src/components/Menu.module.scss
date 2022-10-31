@@ -1,0 +1,96 @@
+:root {
+    --noOfModes: 5;
+}
+
+.mainApp {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+    overflow: auto;
+}
+
+.logoContainer {
+    width: min(23rem, calc(100% - 2rem));
+    height: min(23rem, calc(100% - 2rem));
+    margin-top: -8rem;
+
+    .container {
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+    }
+}
+
+.modeSelectContainer {
+    width: min(20rem, calc(100% - 2rem));
+    display: grid;
+    grid-template-columns: 2rem auto 2rem;
+    margin: 1rem 0 1rem 0;
+
+    .modeSelectBox {
+        position: relative;
+        overflow-x: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+
+        .modes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            width: calc(100% * var(--noOfModes));
+            height: 100%;
+            transition: transform 0.5s;
+            // transform: translateX(calc(attr(data-mode) * -100% / var(--noOfModes)));
+            // outline: 1px solid blue;
+
+            .mode {
+                // outline: 1px solid blue;
+                transition: opacity 1s;
+                opacity: 0;
+                width: calc(100% / var(--noOfModes));
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        // outline: 1px solid red;
+    }
+
+    button {
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        // outline: 1px solid red;
+
+        img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    button.rightChevronIcon {
+        img {
+            transform: rotate(180deg);
+        }
+    }
+}
