@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cogIcon from "./assets/cog.svg";
 import backArrowIcon from "./assets/back-arrow.svg";
 import refreshIcon from "./assets/refresh.svg";
@@ -7,11 +7,14 @@ import pencilIcon from "./assets/pencil.svg";
 import undoIcon from "./assets/undo.svg";
 import classes from "./App.module.scss";
 import Menu from "./components/Menu";
+import { Route, Routes, Link } from "react-router-dom";
 
 function App() {
     const gameModes = ["Beginner", "Easy", "Medium", "Hard", "Extreme"];
-    const [mode, setMode] = useState<number>(0);
-    const [showMenu, setShowMenu] = useState<boolean>(true);
+    const [mode, setMode] = useState<number>(Number(localStorage.getItem("mode_index") || "0"));
+    const [activeMode, setActiveMode] = useState<number>(
+        Number(localStorage.getItem("mode_index") || "0")
+    );
 
     const board = [
         [5, 3, 1, 6, 2, 8, 4, 7, 9],
@@ -28,93 +31,103 @@ function App() {
         return Array.apply(0, Array(end - start)).map((element, index) => index + start);
     };
 
-    return showMenu ? (
-        <Menu
-            gameModes={gameModes}
-            mode={mode}
-            setMode={setMode}
-            showMenu={showMenu}
-            setShowMenu={setShowMenu}
-        />
-    ) : (
-        <div className={classes.mainApp}>
-            <div className={classes.header}>
-                <button className={`${classes.button}`}>
-                    <img src={backArrowIcon} alt='React Logo' />
-                </button>
-                <h1>Sudoku</h1>
-                <button className={`${classes.button}`}>
-                    <img src={cogIcon} alt='React Logo' />
-                </button>
-            </div>
+    useEffect(() => {
+        localStorage.setItem("mode_index", String(mode));
+    }, [mode]);
 
-            <div className={classes.boardContainer}>
-                <div className={classes.board}>
-                    {range(0, 3).map((i) =>
-                        range(0, 3).map((j) => (
-                            <div className={classes.boardGroup} id={`group-${i}-${j}`}>
-                                {range(0, 3).map((row) =>
-                                    range(0, 3).map((col) => (
-                                        <div
-                                            className={classes.boardCell}
-                                            id={`cell-${i * 3 + row}-${j * 3 + col}`}
-                                        >
-                                            {board[i * 3 + row][j * 3 + col]}
+    return (
+        <Routes>
+            <Route
+                path='/menu'
+                element={<Menu gameModes={gameModes} mode={mode} setMode={setMode} />}
+            />
+
+            <Route
+                path='/'
+                element={
+                    <div className={classes.mainApp}>
+                        <div className={classes.header}>
+                            <Link to='menu'>
+                                <button className={`${classes.button}`}>
+                                    <img src={backArrowIcon} alt='React Logo' />
+                                </button>
+                            </Link>
+                            <h1>Sudoku</h1>
+                            <button className={`${classes.button}`}>
+                                <img src={cogIcon} alt='React Logo' />
+                            </button>
+                        </div>
+
+                        <div className={classes.boardContainer}>
+                            <div className={classes.board}>
+                                {range(0, 3).map((i) =>
+                                    range(0, 3).map((j) => (
+                                        <div className={classes.boardGroup} id={`group-${i}-${j}`}>
+                                            {range(0, 3).map((row) =>
+                                                range(0, 3).map((col) => (
+                                                    <div
+                                                        className={classes.boardCell}
+                                                        id={`cell-${i * 3 + row}-${j * 3 + col}`}
+                                                    >
+                                                        {board[i * 3 + row][j * 3 + col]}
+                                                    </div>
+                                                ))
+                                            )}
                                         </div>
                                     ))
                                 )}
                             </div>
-                        ))
-                    )}
-                </div>
-            </div>
-            <div className={classes.numbersContainer}>
-                <button data-count='0' className={classes.numbers}>
-                    1
-                </button>
-                <button data-count='0' className={classes.numbers}>
-                    2
-                </button>
-                <button data-count='0' className={classes.numbers}>
-                    3
-                </button>
-                <button data-count='0' className={classes.numbers}>
-                    4
-                </button>
-                <button data-count='0' className={classes.numbers}>
-                    5
-                </button>
-                <button data-count='0' className={classes.numbers}>
-                    6
-                </button>
-                <button data-count='0' className={classes.numbers}>
-                    7
-                </button>
-                <button data-count='0' className={classes.numbers}>
-                    8
-                </button>
-                <button data-count='0' className={classes.numbers}>
-                    9
-                </button>
-                <button data-count='' className={classes.numbers}>
-                    X
-                </button>
-            </div>
-            <div className={classes.bottomControl}>
-                <button className={`${classes.bottomButton} ${classes.refresh}`}>
-                    <img src={refreshIcon} alt='React Logo' />
-                </button>
-                <button className={classes.bottomButton}>
-                    <img src={checkIcon} alt='React Logo' />
-                </button>
-                <button className={`${classes.bottomButton} ${classes.pencil}`}>
-                    <img src={pencilIcon} alt='React Logo' />
-                </button>
-                <button className={classes.bottomButton}>
-                    <img src={undoIcon} alt='React Logo' />
-                </button>
-            </div>
-        </div>
+                        </div>
+                        <div className={classes.numbersContainer}>
+                            <button data-count='0' className={classes.numbers}>
+                                1
+                            </button>
+                            <button data-count='0' className={classes.numbers}>
+                                2
+                            </button>
+                            <button data-count='0' className={classes.numbers}>
+                                3
+                            </button>
+                            <button data-count='0' className={classes.numbers}>
+                                4
+                            </button>
+                            <button data-count='0' className={classes.numbers}>
+                                5
+                            </button>
+                            <button data-count='0' className={classes.numbers}>
+                                6
+                            </button>
+                            <button data-count='0' className={classes.numbers}>
+                                7
+                            </button>
+                            <button data-count='0' className={classes.numbers}>
+                                8
+                            </button>
+                            <button data-count='0' className={classes.numbers}>
+                                9
+                            </button>
+                            <button data-count='' className={classes.numbers}>
+                                X
+                            </button>
+                        </div>
+                        <div className={classes.bottomControl}>
+                            <button className={`${classes.bottomButton} ${classes.refresh}`}>
+                                <img src={refreshIcon} alt='React Logo' />
+                            </button>
+                            <button className={classes.bottomButton}>
+                                <img src={checkIcon} alt='React Logo' />
+                            </button>
+                            <button className={`${classes.bottomButton} ${classes.pencil}`}>
+                                <img src={pencilIcon} alt='React Logo' />
+                            </button>
+                            <button className={classes.bottomButton}>
+                                <img src={undoIcon} alt='React Logo' />
+                            </button>
+                        </div>
+                    </div>
+                }
+            />
+        </Routes>
     );
 }
 

@@ -1,21 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./Menu.module.scss";
 import logo from "../assets/logo.svg";
 import chevronIcon from "../assets/chevron.svg";
+import { useNavigate } from "react-router-dom";
 
 const Menu = ({
     gameModes,
     mode,
     setMode,
-    showMenu,
-    setShowMenu,
 }: {
     gameModes: string[];
     mode: number;
     setMode: React.Dispatch<React.SetStateAction<number>>;
-    showMenu: boolean;
-    setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+    const [showModal, setShowModal] = useState(false);
+    let navigate = useNavigate();
     const leftShift = () => {
         if (mode > 0) {
             setMode(mode - 1);
@@ -27,7 +26,20 @@ const Menu = ({
         }
     };
     const handleNewGameClick = () => {
-        setShowMenu(!showMenu);
+        setShowModal(true);
+        // localStorage.setItem("active_mode", String(mode));
+        // navigate("/");
+    };
+
+    const handleResumeGameClick = () => {
+        navigate("/");
+    };
+    const handleModalClick = () => {
+        setShowModal(false);
+    };
+    const handleConfirmNewGame = () => {
+        localStorage.setItem("active_mode", String(mode));
+        navigate("/");
     };
     return (
         <div className={classes.mainApp}>
@@ -66,7 +78,34 @@ const Menu = ({
             </div>
             <div className={classes.buttonsContainer}>
                 <button onClick={handleNewGameClick}>New Game</button>
+
+                <button
+                    style={{
+                        visibility:
+                            mode === Number(localStorage.getItem("active_mode"))
+                                ? "visible"
+                                : "hidden",
+                    }}
+                    onClick={handleResumeGameClick}
+                >
+                    Resume
+                </button>
             </div>
+
+            {showModal && (
+                <div onClick={handleModalClick} className={classes.modalContainer}>
+                    <div className={classes.modal} onClick={(e) => e.stopPropagation()}>
+                        <p>
+                            Are you sure you want to start a new game? All your saved progress of
+                            previous game will be lost.
+                        </p>
+                        <div className={classes.buttons}>
+                            <button onClick={handleModalClick}>Cancel</button>
+                            <button onClick={handleConfirmNewGame}>New Game</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
