@@ -1,13 +1,20 @@
+const base = 3;
+const side = base * base;
+
 const pattern = (r, c) => {
     return (3 * (r % 3) + Math.floor(r / 3) + c) % 9;
 };
 
-const shuffleArray = (array) => {
+const shuffleArray = (array, sampleSize) => {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
-    return array;
+    if (sampleSize && sampleSize < array.length) {
+        return array.slice(0, sampleSize);
+    } else {
+        return array;
+    }
 };
 
 const range = (start, end) => {
@@ -54,4 +61,15 @@ rows.forEach((row, row_index) => {
     });
 });
 
+displayBoard(board);
+
+let squares = side * side;
+let ratio = 3 / 4;
+let empties = Math.floor(squares * ratio);
+
+shuffleArray(range(0, squares), empties).forEach((p, index) => {
+    board[Math.floor(p / side)][p % side] = "*";
+});
+
+console.log("[space]");
 displayBoard(board);

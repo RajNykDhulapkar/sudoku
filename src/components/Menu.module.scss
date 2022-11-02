@@ -16,7 +16,7 @@
 
 .logoContainer {
     width: min(23rem, calc(100% - 2rem));
-    height: min(23rem, calc(100% - 2rem));
+    // height: min(23rem, calc(100% - 2rem));
     margin-top: -8rem;
 
     .container {
@@ -140,6 +140,7 @@
             gap: 3rem;
 
             button {
+                outline: 1px solid gray;
                 width: 45%;
             }
         }

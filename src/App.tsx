@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import cogIcon from "./assets/cog.svg";
 import backArrowIcon from "./assets/back-arrow.svg";
 import refreshIcon from "./assets/refresh.svg";
@@ -7,7 +7,8 @@ import pencilIcon from "./assets/pencil.svg";
 import undoIcon from "./assets/undo.svg";
 import classes from "./App.module.scss";
 import Menu from "./components/Menu";
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes, Link, useNavigate } from "react-router-dom";
+import generateBoard from "./services/generateSudoku";
 
 function App() {
     const gameModes = ["Beginner", "Easy", "Medium", "Hard", "Extreme"];
@@ -16,7 +17,9 @@ function App() {
         Number(localStorage.getItem("mode_index") || "0")
     );
 
-    const board = [
+    const navigate = useNavigate();
+
+    const _board = [
         [5, 3, 1, 6, 2, 8, 4, 7, 9],
         [9, 4, 7, 5, 3, 1, 2, 8, 6],
         [6, 2, 8, 9, 4, 7, 3, 1, 5],
@@ -31,7 +34,15 @@ function App() {
         return Array.apply(0, Array(end - start)).map((element, index) => index + start);
     };
 
+    const board = useMemo(() => {
+        return generateBoard();
+    }, []);
+
     useEffect(() => {
+        let progress = localStorage.getItem("in_progress");
+        if (!progress || progress !== "true") {
+            navigate("menu", { relative: "route" });
+        }
         localStorage.setItem("mode_index", String(mode));
     }, [mode]);
 
@@ -59,23 +70,36 @@ function App() {
                         </div>
 
                         <div className={classes.boardContainer}>
-                            <div className={classes.board}>
-                                {range(0, 3).map((i) =>
-                                    range(0, 3).map((j) => (
-                                        <div className={classes.boardGroup} id={`group-${i}-${j}`}>
-                                            {range(0, 3).map((row) =>
-                                                range(0, 3).map((col) => (
-                                                    <div
-                                                        className={classes.boardCell}
-                                                        id={`cell-${i * 3 + row}-${j * 3 + col}`}
-                                                    >
-                                                        {board[i * 3 + row][j * 3 + col]}
-                                                    </div>
-                                                ))
-                                            )}
-                                        </div>
-                                    ))
-                                )}
+                            <div className={classes.container}>
+                                <div className={classes.board}>
+                                    {range(0, 3).map((i) =>
+                                        range(0, 3).map((j) => (
+                                            <div
+                                                className={classes.boardGroup}
+                                                id={`group-${i}-${j}`}
+                                            >
+                                                {range(0, 3).map((row) =>
+                                                    range(0, 3).map((col) => (
+                                                        <div
+                                                            className={`${classes.boardCell} ${
+                                                                board[i * 3 + row][j * 3 + col]
+                                                                    ? classes.prefilledCell
+                                                                    : ""
+                                                            }`}
+                                                            id={`cell-${i * 3 + row}-${
+                                                                j * 3 + col
+                                                            }`}
+                                                        >
+                                                            {board[i * 3 + row][j * 3 + col]
+                                                                ? board[i * 3 + row][j * 3 + col]
+                                                                : " "}
+                                                        </div>
+                                                    ))
+                                                )}
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
                             </div>
                         </div>
                         <div className={classes.numbersContainer}>

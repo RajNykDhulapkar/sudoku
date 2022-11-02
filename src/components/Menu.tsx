@@ -39,6 +39,7 @@ const Menu = ({
     };
     const handleConfirmNewGame = () => {
         localStorage.setItem("active_mode", String(mode));
+        localStorage.setItem("in_progress", "true");
         navigate("/");
     };
     return (
