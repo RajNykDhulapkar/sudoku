@@ -1,7 +1,7 @@
 .mainApp {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 92vh;
     width: 100%;
     justify-content: flex-start;
     align-items: center;
@@ -10,9 +10,9 @@
 .header {
     width: min(32rem, calc(100% - 1rem));
     text-align: center;
-    padding: 0;
-    margin: 0.5rem 2rem;
     height: 2.7rem;
+
+    margin-top: 0.5rem;
 
     display: grid;
     grid-template-columns: 3rem auto 3rem;
@@ -24,6 +24,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        text-transform: uppercase;
     }
     a {
         display: flex;
@@ -40,22 +41,29 @@
         background: transparent;
         display: flex;
         justify-self: center;
+        justify-content: center;
         align-items: center;
-
-        img {
-            width: 100%;
-            height: 100%;
-        }
     }
+
+    img {
+        width: 80%;
+        height: 80%;
+    }
+
+    // select .button that is direct child of .header
+    // > .button {
+    //     outline: 1px solid red;
+    // }
 }
 
 .boardContainer {
     width: min(32rem, calc(100% - 1rem));
     position: relative;
     display: flex;
-    margin: 0 2rem;
     align-items: center;
     justify-content: center;
+
+    margin-top: 0.5rem;
 
     .container {
         position: relative;
@@ -162,11 +170,14 @@
     font-weight: bolder;
 
     display: flex;
-    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    padding: 1.5rem 0 1rem 0;
 
-    flex-grow: 1;
+    margin-top: 1rem;
+
+    // flex-grow: 1;
 
     .numbers {
         margin: 0;
@@ -216,5 +227,13 @@
     }
     .refresh {
         padding: 0.1rem;
+    }
+
+    @media screen and (max-width: 640px) {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        right: 0;
     }
 }

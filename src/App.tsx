@@ -57,7 +57,7 @@ function App() {
                 path='/'
                 element={
                     <div className={classes.mainApp}>
-                        <div className={classes.header}>
+                        <header className={classes.header}>
                             <Link to='menu'>
                                 <button className={`${classes.button}`}>
                                     <img src={backArrowIcon} alt='React Logo' />
@@ -67,7 +67,7 @@ function App() {
                             <button className={`${classes.button}`}>
                                 <img src={cogIcon} alt='React Logo' />
                             </button>
-                        </div>
+                        </header>
 
                         <div className={classes.boardContainer}>
                             <div className={classes.container}>
