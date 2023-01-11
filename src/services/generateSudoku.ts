@@ -31,9 +31,13 @@ const gameModes = ["Beginner", "Easy", "Medium", "Hard", "Extreme"];
 
 const gameModeRatios = {
     [gameModes[0]]: 0.2962962663,
+    [gameModes[1]]: 0.370370388,
+    [gameModes[2]]: 0.4444444478,
+    [gameModes[3]]: 0.5185185075,
+    [gameModes[4]]: 0.5925925973,
 };
 
-const generateBoard = (mode: number = 0) => {
+const generateBoard = (mode: number = 0): number[][] => {
     const board = new Array(9).fill(0).map(() => new Array(9).fill(0));
 
     let rows = new Array(9).fill(0),

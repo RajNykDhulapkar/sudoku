@@ -3,6 +3,8 @@ import classes from "./Menu.module.scss";
 import logo from "../assets/logo.svg";
 import chevronIcon from "../assets/chevron.svg";
 import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import generateBoard from "../services/generateSudoku";
 
 const Menu = ({
     gameModes,
@@ -15,6 +17,12 @@ const Menu = ({
 }) => {
     const [showModal, setShowModal] = useState(false);
     let navigate = useNavigate();
+
+    const [inProgress, setInProgress] = useLocalStorage<boolean>("in_progress", false);
+    const [activeMode, setActiveMode] = useLocalStorage<number | null>("active_mode", null);
+
+    const [board, setBoard] = useLocalStorage<number[][]>("storedBoard", generateBoard());
+
     const leftShift = () => {
         if (mode > 0) {
             setMode(mode - 1);
@@ -38,8 +46,9 @@ const Menu = ({
         setShowModal(false);
     };
     const handleConfirmNewGame = () => {
-        localStorage.setItem("active_mode", String(mode));
-        localStorage.setItem("in_progress", "true");
+        setActiveMode(mode);
+        setBoard(generateBoard(mode));
+        setInProgress(true);
         navigate("/");
     };
     return (

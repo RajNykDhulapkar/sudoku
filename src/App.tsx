@@ -9,48 +9,32 @@ import classes from "./App.module.scss";
 import Menu from "./components/Menu";
 import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import generateBoard from "./services/generateSudoku";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 function App() {
     const gameModes = ["Beginner", "Easy", "Medium", "Hard", "Extreme"];
-    const [mode, setMode] = useState<number>(Number(localStorage.getItem("mode_index") || "0"));
-    const [activeMode, setActiveMode] = useState<number>(
-        Number(localStorage.getItem("mode_index") || "0")
-    );
+    const [modeIndex, setModeIndex] = useLocalStorage<number>("mode_index", 0);
+    const [inProgress, setInProgress] = useLocalStorage<boolean>("in_progress", false);
 
     const navigate = useNavigate();
 
-    const _board = [
-        [5, 3, 1, 6, 2, 8, 4, 7, 9],
-        [9, 4, 7, 5, 3, 1, 2, 8, 6],
-        [6, 2, 8, 9, 4, 7, 3, 1, 5],
-        [1, 9, 3, 8, 5, 2, 6, 4, 7],
-        [8, 5, 2, 7, 6, 4, 9, 3, 1],
-        [7, 6, 4, 1, 9, 3, 5, 2, 8],
-        [3, 7, 9, 2, 1, 5, 8, 6, 4],
-        [4, 8, 6, 3, 7, 9, 1, 5, 2],
-        [2, 1, 5, 4, 8, 6, 7, 9, 3],
-    ];
     const range = (start: number, end: number): number[] => {
         return Array.apply(0, Array(end - start)).map((element, index) => index + start);
     };
 
-    const board = useMemo(() => {
-        return generateBoard();
-    }, []);
+    const [board, setBoard] = useLocalStorage<number[][]>("storedBoard", generateBoard());
 
     useEffect(() => {
-        let progress = localStorage.getItem("in_progress");
-        if (!progress || progress !== "true") {
+        if (!inProgress) {
             navigate("menu", { relative: "route" });
         }
-        localStorage.setItem("mode_index", String(mode));
-    }, [mode]);
+    }, []);
 
     return (
         <Routes>
             <Route
                 path='/menu'
-                element={<Menu gameModes={gameModes} mode={mode} setMode={setMode} />}
+                element={<Menu gameModes={gameModes} mode={modeIndex} setMode={setModeIndex} />}
             />
 
             <Route
@@ -77,6 +61,7 @@ function App() {
                                             <div
                                                 className={classes.boardGroup}
                                                 id={`group-${i}-${j}`}
+                                                key={`group-${i}-${j}`}
                                             >
                                                 {range(0, 3).map((row) =>
                                                     range(0, 3).map((col) => (
@@ -87,6 +72,9 @@ function App() {
                                                                     : ""
                                                             }`}
                                                             id={`cell-${i * 3 + row}-${
+                                                                j * 3 + col
+                                                            }`}
+                                                            key={`cell-${i * 3 + row}-${
                                                                 j * 3 + col
                                                             }`}
                                                         >
@@ -136,16 +124,16 @@ function App() {
                         </div>
                         <div className={classes.bottomControl}>
                             <button className={`${classes.bottomButton} ${classes.refresh}`}>
-                                <img src={refreshIcon} alt='React Logo' />
+                                <img src={refreshIcon} alt='Refresh Icon' />
                             </button>
                             <button className={classes.bottomButton}>
-                                <img src={checkIcon} alt='React Logo' />
+                                <img src={checkIcon} alt='Check Icon' />
                             </button>
                             <button className={`${classes.bottomButton} ${classes.pencil}`}>
-                                <img src={pencilIcon} alt='React Logo' />
+                                <img src={pencilIcon} alt='Pencil Icon' />
                             </button>
                             <button className={classes.bottomButton}>
-                                <img src={undoIcon} alt='React Logo' />
+                                <img src={undoIcon} alt='Undo Icon' />
                             </button>
                         </div>
                     </div>
