@@ -1,0 +1,3 @@
+# sudoku
+
+This project is a sudoku game built using React.js, SCSS modules, and TypeScript. It utilizes the React Context API for state management and also uses memoization to optimize performance. The game features a clean and intuitive user interface, allowing users to easily navigate and play the game. The game logic has been implemented using advanced techniques to ensure optimal performance and a seamless user experience. The game also includes features such as error checking and a hint system to aid players in solving the puzzles. Overall, this project is a great example of a modern and highly-performant sudoku game built using the latest web technologies.
