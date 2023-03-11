@@ -8,7 +8,7 @@ import undoIcon from "./assets/undo.svg";
 import classes from "./App.module.scss";
 import Menu from "./components/Menu";
 import { Route, Routes, Link, useNavigate } from "react-router-dom";
-import generateBoard from "./services/generateSudoku";
+import generateBoard, { Cell } from "./services/generateSudoku";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
         return Array.apply(0, Array(end - start)).map((element, index) => index + start);
     };
 
-    const [board, setBoard] = useLocalStorage<number[][]>("storedBoard", generateBoard());
+    const [board, setBoard] = useLocalStorage<Cell[][]>("board", generateBoard());
 
     useEffect(() => {
         if (!inProgress) {
@@ -68,6 +68,7 @@ function App() {
                                                         <div
                                                             className={`${classes.boardCell} ${
                                                                 board[i * 3 + row][j * 3 + col]
+                                                                    .initialValue
                                                                     ? classes.prefilledCell
                                                                     : ""
                                                             }`}
@@ -78,8 +79,9 @@ function App() {
                                                                 j * 3 + col
                                                             }`}
                                                         >
-                                                            {board[i * 3 + row][j * 3 + col]
+                                                            {board[i * 3 + row][j * 3 + col].value
                                                                 ? board[i * 3 + row][j * 3 + col]
+                                                                      .value
                                                                 : " "}
                                                         </div>
                                                     ))

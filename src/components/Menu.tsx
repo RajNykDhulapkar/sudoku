@@ -4,7 +4,7 @@ import logo from "../assets/logo.svg";
 import chevronIcon from "../assets/chevron.svg";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import generateBoard from "../services/generateSudoku";
+import generateBoard, { Cell } from "../services/generateSudoku";
 
 const Menu = ({
     gameModes,
@@ -21,7 +21,7 @@ const Menu = ({
     const [inProgress, setInProgress] = useLocalStorage<boolean>("in_progress", false);
     const [activeMode, setActiveMode] = useLocalStorage<number | null>("active_mode", null);
 
-    const [board, setBoard] = useLocalStorage<number[][]>("storedBoard", generateBoard());
+    const [board, setBoard] = useLocalStorage<Cell[][]>("board", generateBoard());
 
     const leftShift = () => {
         if (mode > 0) {
@@ -49,7 +49,11 @@ const Menu = ({
         setActiveMode(mode);
         setBoard(generateBoard(mode));
         setInProgress(true);
-        navigate("/");
+        // delay of 80ms before navigating to game page
+        // this delay is required to allow the new board to be set to the local storage
+        setTimeout(() => {
+            navigate("/");
+        }, 80);
     };
     return (
         <div className={classes.mainApp}>

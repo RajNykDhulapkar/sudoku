@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { Cell } from "../services/generateSudoku";
 
 interface LocalStorageKeys {
     in_progress: boolean;
     mode_index: number;
     active_mode: string;
-    storedBoard: number[][];
+    board: Cell[][];
 }
 
 // custom hook to manage local storage
@@ -26,12 +27,12 @@ export const useLocalStorage = <T>(
         }
     });
 
-    useEffect(() => {
-        const value = window.localStorage.getItem(key);
-        if (value) {
-            setStoredValue(JSON.parse(value));
-        }
-    }, [storedValue]);
+    // useEffect(() => {
+    //     const value = window.localStorage.getItem(key);
+    //     if (value) {
+    //         setStoredValue(JSON.parse(value));
+    //     }
+    // }, [storedValue]);
 
     const setValue = (value: T | ((prevState: T) => T)): void => {
         try {

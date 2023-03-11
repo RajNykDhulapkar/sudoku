@@ -37,7 +37,13 @@ const gameModeRatios = {
     [gameModes[4]]: 0.5925925973,
 };
 
-const generateBoard = (mode: number = 0): number[][] => {
+export type Cell = {
+    value: number;
+    initialValue: number;
+    actualValue: number;
+};
+
+const generateBoard = (mode: number = 0): Cell[][] => {
     const board = new Array(9).fill(0).map(() => new Array(9).fill(0));
 
     let rows = new Array(9).fill(0),
@@ -62,15 +68,36 @@ const generateBoard = (mode: number = 0): number[][] => {
         });
     });
 
+    // Convert board from number[][] to Cell[][]
+    const cellBoard = board.map((row, row_index) => {
+        // to return a new transform row
+        return row.map((num, num_index) => {
+            return {
+                value: num,
+                initialValue: num,
+                actualValue: num,
+            };
+        });
+    });
+
     let squares = side * side;
-    let ratio = 3 / 4;
+    // let ratio = 3 / 4;
     let empties = Math.floor(squares * gameModeRatios[gameModes[mode]]);
 
     shuffleArray(range(0, squares), empties).forEach((p, index) => {
+        const row = Math.floor(p / side);
+        const col = p % side;
+        const cell = cellBoard[row][col];
+        cellBoard[row][col] = {
+            ...cell,
+            value: 0,
+            initialValue: 0,
+        };
+
         board[Math.floor(p / side)][p % side] = 0;
     });
 
-    return board;
+    return cellBoard;
 };
 
 export default generateBoard;
